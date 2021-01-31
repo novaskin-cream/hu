@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html>
+	<head>
+
+<script src="js/jquery.min.js"></script>
+
+    <script>
+    function set_validator_errors(){
+        orderValidator.errorTitle = 'Kérjük javítsd ki a következő hibákat'; 
+
+        orderValidator.errorNameField = 'Név'; 
+        orderValidator.errorNameMess = 'Adja meg nevét'; 
+        
+        orderValidator.errorPhoneField = 'Telefonszám'; 
+        orderValidator.errorPhoneMess = 'Írja be a helyes telefonszámot'; 
+        
+        orderValidator.errorAddress = 'Írja be a helyes címet'; 
+        orderValidator.errorRequired = 'kötelező mező'; 
+        orderValidator.errorMaxLength = 'érvényes maximális {1} karakter'; 
+        orderValidator.errorMinLength = 'érvényes minimum {1} karakter'; 
+        orderValidator.errorEmailField = 'E-mail';
+        orderValidator.errorEmail = 'Érvénytelen e-mail megadva';
+        }
+    </script>
+    
+<script>
+
+
+
+    
+    setOffer: function (offerId) {
+        if (offerId == this._setOfferId) {
+            return ;
+        }
+        this._setOfferId = offerId;
+        if (offerId) {
+            var offer = app.offers[offerId];
+            var previousOffer = app.currentOffer;
+            app.currentOffer = offer;
+            var event = this.jq.Event("offerchange");
+            event.previousOffer = previousOffer;
+            event.currentOffer = app.currentOffer;
+            this.jq(document).trigger(event);
+            this.updatePage(offer);
+        } else {
+            $('input[name=country]').val('');
+        }
+    },
+    
+    updatePage: function(offer) {
+        $('x-newprice').html(offer.price);
+        $('x-oldprice').html(offer.price2);
+        $('x-currency').html(offer.currency.name);
+        $('input[name=offer], select[name=offer]').val(offer.id);
+        $('input[name=country]').val(offer.country.code);
+    },
+
+    blockForm: function() {
+        // Блокируем кнопки при отправке формы
+        $('input[type=submit]', $(this)).prop( 'disabled', true ).attr( 'disabled', true );
+        $('button', $(this)).prop( 'disabled', true ).attr( 'disabled', true );
+        app.incompleteOrder.lock = true;
+        clearTimeout(app.incompleteOrder.timer);
+    },
+
+    unblockForm: function() {
+        $('input[type=submit]', $(this)).prop( 'disabled', false ).attr( 'disabled', false );
+        $('button[type=submit]', $(this)).prop( 'disabled', false ).attr( 'disabled', false );
+        app.incompleteOrder.lock = false;
+        clearTimeout(app.incompleteOrder.timer);
+    }
+
+};
+
+
+</script><script src="js/form.validate.js"></script>
+<script src="js/form.incomplete.js"></script>
+<script src="js/main2.js"></script>
+
+
+
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="X-UA-Compatible" content="ie=edge">
+		<title> Novaskin </title>
+		<link rel="shortcut icon" href="images/favicon.png" type="image/x-icon">
+		<link href="css/css_1.css" rel="stylesheet">
+		<link href="css/css.css" rel="stylesheet">
+		<link href="css/main.css" rel="stylesheet" type="text/css">
+		<link href="css/slick.css" rel="stylesheet" type="text/css">
+	</head>
+	<body>
+		<div class="s__main">
+			<header>
+				<div class="left-block">
+					<img src="images/head1.png">
+					<div class="statistics">
+						<ul>
+							<li>
+								<div class="firstLine"></div>
+								<span> akár  <span class="first">95%</span><br> ránctalanítás </span>
+							</li>
+							<li>
+								<div class="secondLine"></div>
+								<span> akár  <span class="second">84%</span><br> -kal jobb a bőrhidratálása</span>
+							</li>
+							<li>
+								<div class="thirdLine"></div>
+								<span> akár  <span class="third">73%</span><br> jobb az idős bőr rugalmassága <br>
+								</span>
+							</li>
+						</ul>
+					</div>
+				</div>
+				<div class="right-block">
+					<div class="top-level">
+						<div class="logo-block">
+							<div class="logo-inscription">• Novaskin •</div>
+							<div class="logo-inscription-second"> Hivatalos oldal</div>
+						</div>
+						<div class="second-top-block">
+							<div class="title"><i> Végre </i></div>
+							<div class="inscription"><span> egy ránctalanító krém <br> ami tényleg működik! </span></div>
+							<img src="images/beforeafter.png">
+						</div>
+					</div>
+					<div class="bottom-level">
+						<img src="images/product.png">
+						<div class="right-block">
+							<ul>
+								<li><img src="images/arrow-marker.png"><i>Simává  és rugalmassá varázsolja a bőrt</i></li>
+								<li><img src="images/arrow-marker.png"><i>Kisimítja a ráncokat és feszesíti az arc kontúrját</i></li>
+								<li><img src="images/arrow-marker.png"><i>Védi a bőrt a negatív környezeti hatásoktól</i></li>
+							</ul>
+							<div class="certificates">
+								<ul>
+									<li><img src="images/first-cert.png"></li>
+									<li><img src="images/second-cert.png"></li>
+									<li><img src="images/third-cert.png"></li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="bottom-block">
+					<ul>
+						<li>
+							<img src="images/bbfirst.png">
+							<div>
+								<span> Hatékony <br><b> fiatalítás </b></span>
+								<ul>
+									<li>
+										<img class="check" src="images/check.png">
+										<span>Ráncok simítása</span>
+									</li>
+									<li>
+										<img class="check" src="images/check.png">
+										<span>Komplex megközelítés</span>
+									</li>
+									<li>
+										<img class="check" src="images/check.png">
+										<span>Öregedésgátló</span>
+									</li>
+								</ul>
+							</div>
+						</li>
+						<li>
+							<img src="images/bbsecond.png">
+							<div>
+								<span><b>Arctisztítás</b></span>
+								<ul>
+									<li>
+										<img class="check" src="images/check.png">
+										<span>Természetes összetevők</span>
+									</li>
+									<li>
+										<img class="check" src="images/check.png">
+										<span>Az érzékeny bőr ápolása</span>
+									</li>
+									<li>
+										<img class="check" src="images/check.png">
+										<span>A pórusok eltávolítása</span>
+									</li>
+								</ul>
+							</div>
+						</li>
+						<li>
+							<img src="images/bbthird.png">
+							<div>
+								<span> Arc  <br><b> revitalizáció </b></span>
+								<ul>
+									<li>
+										<img class="check" src="images/check.png">
+										<span>Sejtmegújulás </span>
+									</li>
+									<li>
+										<img class="check" src="images/check.png">
+										<span>A toxinok semlegesítése</span>
+									</li>
+									<li>
+										<img class="check" src="images/check.png">
+										<span>Védelem a negatív hatásoktól</span>
+									</li>
+								</ul>
+							</div>
+						</li>
+						
+					</ul>
+				</div>
+			</header>
+			<main>
+				<div class="first-block">
+					<div class="title"> Hogyan működik a Novaskin? </div>
+					<div class="text">
+						A Novaskin egy vitamin-ásványi komplexet tartalmaz, amely ellensúlyozza a bőr öregedésével kapcsolatos változásokat. A hialuronsav kisimítja a ráncokat, a természetes kollagén elősegíti a tartós hatást, a magnézium megszünteti az életkori pigmentációt, és a C-vitamin normalizálja a vérkeringést és megtisztítja a bőrét a  toxinoktól . A bőr éveken át friss marad! 
+					</div>
+					<div class="before-after">
+						<div class="before">
+							<span> ELŐTTE </span>
+							<img src="images/after.png">
+						</div>
+						<div class="after">
+							<span> UTÁNA </span>
+							<img src="images/before.png">
+						</div>
+					</div>
+					<div class="week1">
+						<img src="images/week1.png">
+						<span>Első hét</span>
+					</div>
+					<div class="week2">
+						<img src="images/week2.png">
+						<span>Második hét</span>
+					</div>
+					<div class="week3">
+						<img src="images/week3.png">
+						<span>Harmadik hét</span>
+					</div>
+				</div>
+				<div class="second-block">
+					<div class="title">A Novaskin előnyei</div>
+					<div class="right-block">
+						<img src="images/product.png">
+						<span><b>A speciálisan szabadalmaztatott Novaskin összetétel innovatív és ugyanakkor természetes. </b><br>
+						A Novaskin 7-szer több vitamint és ásványi anyagot tartalmaz, mint a hasonló termékek. A krém innovatív formulája küzd az érett bőr problémáival.Emellett a Novaskin gazdag vitaminokkal és ásványi anyagokkal, amelyek  gátolják a bőr öregedését. A krém nem okoz elszíneződést, és a bőr megkapja a szükséges tápanyagokat, miközben megtartja a természetes színt.
+						</span>
+					</div>
+					<ul>
+						<li>
+							<img src="images/step1.png">
+							<div class="text">
+								<div class="title"> Tisztítás </div>
+								<span>A Novaskin használata előtt tisztítsa meg arcát egy arclemosóval.</span>
+							</div>
+						</li>
+						<li>
+							<img src="images/step2.png">
+							<div class="text">
+								<div class="title">Használata</div>
+								<span> Vigye fel a Novaskin krémet az arcára és egyenletesen oszlassa el, a szemkörnyék kihagyásával.
+								</span>
+							</div>
+						</li>
+						<li>
+							<img src="images/step3.png">
+							<div class="text">
+								<div class="title"> Eredmények </div>
+								<span>A bőr azonnal lágy, rugalmas lesz és megőrzi a  nedvességet 24 órán át.</span>
+							</div>
+						</li>
+					</ul>
+				</div>
+
+				<div class="fouth-block">
+					<div class="title"><i>A világ minden tájáról a nők milliói már használják a krémet!</i></div>
+					<div class="image-block">
+						<img src="images/fouth-lvl-first.png">
+						<img src="images/fouth-lvl-second.png">
+						<img src="images/fouth-lvl-third.png">
+						<img src="images/fouth-lvl-fouth.png">
+						<img src="images/fouth-lvl-fifth.png">
+						<img src="images/fouth-lvl-sixt.png">
+					</div>
+					<div class="bottom-block">
+						<span> Fiatalodj 10 évet!</span>
+						<img src="images/arrow.png">
+						<a class="to-form" href="#order_form0"><button class="pre_toform btn">MEGRENDELEM</button></a>
+					</div>
+				</div>
+				<div class="fifth-block">
+					<div class="title">Valódi emberek, valódi eredmények.</div>
+					<div class="top-block">
+						<div class="first-block">
+							<img src="images/fouth-top-first.png">
+							<span>Előtte</span>
+						</div>
+						<div class="second-block">
+							<div class="title">“Az eredmények megleptek”</div>
+							<div class="mark">
+								<i class="fa fa-star"></i>
+								<i class="fa fa-star"></i>
+								<i class="fa fa-star"></i>
+								<i class="fa fa-star"></i>
+								<i class="fa fa-star"></i>
+							</div>
+							<div class="text">
+								<span>
+								<i> "Novaskin felfedezés volt számomra:
+mindössze két hét  rendszeres használat után a ráncok láthatóan kisimultak,  az arcbőr világosabb lett és rugalmasabb. Most mindenkinek tanácsolom.
+ <br>Ne féljen  kipróbálni ezt a fantasztikus
+krémet, nem fog csalódni!"
+
+								</i>
+								</span>
+								<div class="inscr">
+									<i> Diana,45 éves </i>
+								</div>
+							</div>
+						</div>
+						<div class="third-block">
+							<img src="images/fouth-top-third.png">
+							<span> Utána </span>
+						</div>
+					</div>
+					<div class="bottom-block">
+						<div class="slide slide1">
+							<div class="image-container">
+								<div class="image">
+									<img src="images/fifth-three-slide.png">
+									<span> Előtte  </span>
+									<span> Utána </span>
+								</div>
+							</div>
+							<div class="title">“Az eredmények megleptek”</div>
+							<div class="text"> "Novaskin felfedezés volt számomra:
+mindössze két hét  rendszeres használat után a ráncok láthatóan kisimultak,  az arcbőr világosabb lett és rugalmasabb. Most mindenkinek tanácsolom.
+ <br>Ne féljen  kipróbálni ezt a fantasztikus
+krémet, nem fog csalódni!"
+							</div>
+							<div class="inscr">
+								Diana,45 éves
+							</div>
+						</div>
+						<div class="slide">
+							<div class="image-container">
+								<div class="image">
+									<img src="images/fifth-first-slide.png">
+									<span> Előtte  </span>
+									<span> Utána </span>
+								</div>
+							</div>
+							<div class="title">“Hihetetlen lifting hatás, mint plasztikai  műtét után”</div>
+							<div class="text">"Azért próbáltam ki a Novaskin, mert valami újat akartam megtapasztalni. Meglepett a termék lágy konzisztenciája, a krém gyorsan felszívódott, és nem hagyott  zsíros és a fényes nyomokat. A hatás összehasonlítható a professzionális lifting hatásával. Két hetes használat után az arcom 10 évvel fiatalabbnak tűnt!"</div>
+							<div class="inscr">
+								Ilona, 55 éves
+							</div>
+						</div>
+						<div class="slide">
+							<div class="image-container">
+								<div class="image">
+									<img src="images/fifth-second-slide.png">
+									<span> Előtte  </span>
+									<span> Utána </span>
+								</div>
+							</div>
+							<div class="title">“Friss bőr még 50 után is”</div>
+							<div class="text"> "Nemrég egy barátnőm adott nekem egy Novaskin krémet . Használata után teljesen megváltozott az arcom! A bőr feszesebbé és frissebbé vált, és a ráncok is eltűntek. Most örömmel nézek magamra a tükörbe."
+							</div>
+							<div class="inscr">
+								Angéla, 53 éves
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="sixt-block">
+					<span class="inscr-absolute"><i> Siessenek, a csomagok száma <br><b> akciós áron korlátozott. </b></i></span>
+					<div class="first-block">
+						<div class="logo-inscription">• Novaskin •</div>
+						<div class="inscr"> </div>
+						<div class="arrow-image">
+							<img src="images/sixt-arrow.png">
+						</div>
+						<div class="product-image">
+							<img src="images/product.png">
+						</div>
+					</div>
+					<div class="second-block">
+						<div class="title">MEGRENDELEM MOST</div>
+						<form action="https://healthbestblog.space/cpatl/api.php" class="al-form order_form" id="order_form0" method="post">
+							   
+    <select name="offer" class="form-control country_chang" style="display: none;">
+        <option data-country-code="HU" selected="selected" value="18487">
+            Венгрия        </option>
+    </select>
+
+    							<input name="name" data-count-length="2+" placeholder="Név" type="text">
+							<input class="only_number" name="phone" placeholder="Telefon" type="tel">
+							<span> Akciós ár: <br><span class="line-through price_old al-cost-promo"><x-oldprice>19400</x-oldprice> <x-currency>Ft</x-currency> </span><span class="new-price price_main al-cost"> <x-newprice>9700</x-newprice> <x-currency>Ft</x-currency> </span> </span>
+							<div class="s__of">
+								<button type="submit" class="js_pre_toform my1 btn">MEGRENDELEM</button>
+								<div class="toform"></div>
+							</div>
+     <input type="hidden" name="stream_hid" value="bVrUd78p">
+      <input type="hidden" name="offer_id" value="4444">
+
+      
+      <input type="hidden" name="country" value="HU"> 
+
+      <input type="hidden" name="sid1" value="alex">
+      <input type="hidden" name="sid2" value="alex2">
+      <input type="hidden" name="sid3" value="alex3">
+      <input type="hidden" name="redirect_url" value="https://amazinghealth.github.io/germitox-ita/success/index.html">
+
+						</form>
+					</div>
+				</div>
+			</main>
+		</div>
+		<script src="js/jquery.min_1.js"></script>
+		<script src="js/slick.js"></script>
+		<script>$(document).ready(function(){$('.to-form').on("click",function(e){e.preventDefault();$("html, body").animate({scrollTop:$('#order_form0').offset().top},900)});var mobileWidth=767,destroy=!0,windowWidth;function detectwindowWidth(){windowWidth=$(window).width()}function slideDetect(){if(windowWidth<=mobileWidth&&destroy){$("main > .fifth-block .bottom-block").slick({infinite:!0,slidesToScroll:1,autoplaySpeed:8000,autoplay:!0});destroy=!1}else if(windowWidth>mobileWidth&&!destroy){$("main > .fifth-block .bottom-block").slick('unslick');destroy=!0}};detectwindowWidth();slideDetect();$(window).on("resize",function(){detectwindowWidth();slideDetect()})})</script>
+<center style="margin: 30px auto"><p>OOO "OSTROV PRODAZH" OGRN: 1197746695530 VAT: 7708365555</p>
+<p>129090, Moscow, pereulok Zhivarev, house 8, stroenie 3, flat 16 email: ostrov.prodazh@mail.com Skype: ostrov.prodazh@mail.com</p> 
+
+
+    
+            <p class="conf-link doclinks">
+        <a class="nav-link" href="" onclick="window.open('/policy_en.php'); return false;">Privacy Policy</a>
+          |
+        <a class="nav-link" href="" onclick="window.open('/terms_en.php'); return false;">Terms & Conditions</a>
+      </p>
+      
+    
+</center>
+		
+</body>
+</html>
